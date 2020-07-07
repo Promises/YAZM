@@ -61,16 +61,13 @@ export class KeyInput {
     }
 
     private movePlayerUnit() {
-        // const player: ZPlayer = ZPlayer.fromEvent();
         for (let player of Players) {
             const keys = this.keysDown[player.id];
             if (!keys[Key.W] && !keys[Key.A] && !keys[Key.S] && !keys[Key.D]) {
                 ResetUnitAnimation(player.avatar.handle);
-                // player.avatar.issueInstantOrderAt('stop', 0, 0, null);
                 continue;
             }
             let angle: number;
-            let angleDeg: number;
             let dx: number = 0;
             let dy: number = 0;
 
@@ -87,25 +84,18 @@ export class KeyInput {
                 dx++;
             }
 
-            angle = Atan2(dy, dx)// + player.avatar.facing*bj_DEGTORAD;
+            angle = Atan2(dy, dx)
             player.avatar.facing = angle;
-            // print(player.avatar.facing)
+            player.playWalkAnim();
             dx = player.avatar.x + KeyInput.moveDistance * Cos(angle)
             dy = player.avatar.y + KeyInput.moveDistance * Sin(angle)
-            if (player.walkTick === 0) {
-                // player.avatar.setAnimation("walk")
-                // player.avatar.queueAnimation("walk")
-                // player.avatar.queueAnimation("walk")
-                // player.avatar.queueAnimation("walk")
-                SetUnitAnimationByIndex(player.avatar.handle, 6)
-            }
-            if (player.walkTick === 5) {
-                player.walkTick = -1;
-            }
-            player.walkTick++;
             SetUnitFacingTimed(player.avatar.handle, bj_RADTODEG * Atan2(dy - player.avatar.y, dx - player.avatar.x), 0);
-            player.avatar.x = dx;
-            player.avatar.y = dy;
+
+            if (!IsTerrainPathable(player.avatar.x + (KeyInput.moveDistance * 5) * Cos(angle), player.avatar.y + (KeyInput.moveDistance * 5) * Sin(angle), PATHING_TYPE_WALKABILITY)) {
+                player.avatar.x = dx;
+                player.avatar.y = dy;
+            }
+
         }
 
     }
