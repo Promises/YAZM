@@ -7,10 +7,12 @@ const osKeys = [
     OSKEY_S,
     OSKEY_D,
 ]
+
 export enum MouseKey {
     LEFT,
     RIGHT
 }
+
 enum Key {
     W,
     A,
@@ -88,14 +90,12 @@ export class KeyInput {
             }
 
             angle = Atan2(dy, dx)
-            player.avatar.facing = angle;
             player.playWalkAnim();
             dx = player.avatar.x + KeyInput.moveDistance * Cos(angle)
             dy = player.avatar.y + KeyInput.moveDistance * Sin(angle)
-            if(!player.leftMouse){
-                SetUnitFacingTimed(player.avatar.handle, bj_RADTODEG * Atan2(dy - player.avatar.y, dx - player.avatar.x), 0);
-            } else {
-                player.avatar.setFacingEx(bj_RADTODEG * Atan2(player.mouseY - player.avatar.y, player.mouseX - player.avatar.x))
+
+            if (!player.leftMouse) {
+                player.setUnitFace(dx, dy);
             }
 
             if (!IsTerrainPathable(player.avatar.x + (KeyInput.moveDistance * 5) * Cos(angle), player.avatar.y + (KeyInput.moveDistance * 5) * Sin(angle), PATHING_TYPE_WALKABILITY)) {

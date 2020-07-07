@@ -48,6 +48,9 @@ export class ZPlayer extends MapPlayer {
     private mouseMoved() {
         this.mouseX = BlzGetTriggerPlayerMouseX();
         this.mouseY = BlzGetTriggerPlayerMouseY();
+        if (this.leftMouse) {
+            this.setUnitFace(this.mouseX, this.mouseY);
+        }
     }
 
     public playWalkAnim() {
@@ -65,6 +68,8 @@ export class ZPlayer extends MapPlayer {
         if (button == MOUSE_BUTTON_TYPE_LEFT) {
             this.leftMouse = pressed;
         }
+        this.mouseMoved();
+
         // if (button == MOUSE_BUTTON_TYPE_LEFT) {
         //     this.pressedButtons[MouseKey.LEFT] = pressed;
         // }
@@ -97,6 +102,9 @@ export class ZPlayer extends MapPlayer {
         return this.fromHandle(GetLocalPlayer());
     }
 
+    public setUnitFace(x: number, y: number) {
+        SetUnitFacingTimed(this.avatar.handle, bj_RADTODEG * Atan2(y - this.avatar.y, x - this.avatar.x), 0)
+    }
 }
 
 
