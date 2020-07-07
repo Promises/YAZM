@@ -9,6 +9,7 @@
     "test": "ts-node scripts/test.ts",
     "build": "ts-node --ignore \"node_modules/(?!mdx-m3-viewer).*\" scripts/build.ts",
     "dev": "npm-watch",
+    "start": "npm run build; npm run test",
     "build:defs": "ts-node scripts/dev"
   },
   "dependencies": {
