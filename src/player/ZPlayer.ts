@@ -1,18 +1,23 @@
 import {MapPlayer, Timer, Unit, Trigger} from "w3ts";
-import {KeyInput} from "./input/keyinput";
+import {MouseKey} from "./input/keyinput";
 
 
 // @ts-ignore
 export class ZPlayer extends MapPlayer {
     avatar: Unit;
     private mouseMoveTrigger: Trigger;
+    private mousePressDownTrigger: Trigger;
+    private mouseReleaseTrigger: Trigger;
     walkTick: number = 0;
-    private mouseX: number = 0;
-    private mouseY: number = 0;
+    mouseX: number = 0;
+    mouseY: number = 0;
+    pressedButtons: boolean[];
+    leftMouse: boolean = false;
 
     constructor(index: number) {
         super(index);
         print("Hello world")
+        this.pressedButtons = [];
         new Timer().start(0.5, false, () => {
             this.avatar = new Unit(this, FourCC("hfoo"), 0, 0, 270)
             this.avatar.name = this.name;
@@ -22,18 +27,47 @@ export class ZPlayer extends MapPlayer {
                 new Timer().start(0.1, false, () => {
                     SelectUnitForPlayerSingle(this.avatar.handle, this.handle)
                     this.mouseMoveTrigger = new Trigger();
-                    this.mouseMoveTrigger.registerPlayerMouseEvent(this,bj_MOUSEEVENTTYPE_MOVE)
+                    this.mouseMoveTrigger.registerPlayerMouseEvent(this, bj_MOUSEEVENTTYPE_MOVE)
                     this.mouseMoveTrigger.addAction(() => this.mouseMoved())
+                    this.mousePressDownTrigger = new Trigger();
+                    this.mouseReleaseTrigger = new Trigger();
+                    this.mousePressDownTrigger.registerPlayerMouseEvent(this, bj_MOUSEEVENTTYPE_DOWN)
+                    this.mouseReleaseTrigger.registerPlayerMouseEvent(this, bj_MOUSEEVENTTYPE_UP)
+                    this.mousePressDownTrigger.addAction(() => this.mousePressed(true))
+                    this.mouseReleaseTrigger.addAction(() => this.mousePressed(false))
 
                 });
             });
         });
 
     }
+
     private mouseMoved() {
-        // this.avatar.setFacingEx(bj_RADTODEG * Atan2(BlzGetTriggerPlayerMouseY() - this.avatar.y, BlzGetTriggerPlayerMouseX() - this.avatar.x))
         this.mouseX = BlzGetTriggerPlayerMouseX();
         this.mouseY = BlzGetTriggerPlayerMouseY();
+    }
+
+    public playWalkAnim() {
+        if (this.walkTick === 0) {
+            SetUnitAnimationByIndex(this.avatar.handle, 6)
+        }
+        if (this.walkTick === 5) {
+            this.walkTick = -1;
+        }
+        this.walkTick++;
+    }
+
+    private mousePressed(pressed: boolean) {
+        const button = BlzGetTriggerPlayerMouseButton();
+        if (button == MOUSE_BUTTON_TYPE_LEFT) {
+            this.leftMouse = pressed;
+        }
+        // if (button == MOUSE_BUTTON_TYPE_LEFT) {
+        //     this.pressedButtons[MouseKey.LEFT] = pressed;
+        // }
+        // if (button == MOUSE_BUTTON_TYPE_RIGHT) {
+        //     this.pressedButtons[MouseKey.RIGHT] = pressed;
+        // }
     }
 
     public static fromHandle(handle: player): ZPlayer {
@@ -60,16 +94,6 @@ export class ZPlayer extends MapPlayer {
         return this.fromHandle(GetLocalPlayer());
     }
 
-
-    public playWalkAnim() {
-        if (this.walkTick === 0) {
-            SetUnitAnimationByIndex(this.avatar.handle, 6)
-        }
-        if (this.walkTick === 5) {
-            this.walkTick = -1;
-        }
-        this.walkTick++;
-    }
 }
 
 
