@@ -1,59 +1,7 @@
-gg_trg_Initialization = nil
-gg_unit_Hblm_0003 = nil
-gg_unit_Hpal_0002 = nil
 function InitGlobals()
 end
 
-function CreateUnitsForPlayer0()
-    local p = Player(0)
-    local u
-    local unitID
-    local t
-    local life
-    gg_unit_Hblm_0003 = BlzCreateUnitWithSkin(p, FourCC("Hblm"), 44.7, -860.1, 3.208, FourCC("Hblm"))
-end
-
-function CreateUnitsForPlayer1()
-    local p = Player(1)
-    local u
-    local unitID
-    local t
-    local life
-    gg_unit_Hpal_0002 = BlzCreateUnitWithSkin(p, FourCC("Hpal"), 237.9, -832.4, 269.898, FourCC("Hpal"))
-end
-
-function CreatePlayerBuildings()
-end
-
-function CreatePlayerUnits()
-    CreateUnitsForPlayer0()
-    CreateUnitsForPlayer1()
-end
-
-function CreateAllUnits()
-    CreatePlayerBuildings()
-    CreatePlayerUnits()
-end
-
 --
-function Trig_Initialization_Actions()
-    SelectUnitForPlayerSingle(gg_unit_Hblm_0003, Player(0))
-    SelectUnitForPlayerSingle(gg_unit_Hpal_0002, Player(1))
-end
-
-function InitTrig_Initialization()
-    gg_trg_Initialization = CreateTrigger()
-    TriggerAddAction(gg_trg_Initialization, Trig_Initialization_Actions)
-end
-
-function InitCustomTriggers()
-    InitTrig_Initialization()
-end
-
-function RunInitializationTriggers()
-    ConditionalTriggerExecute(gg_trg_Initialization)
-end
-
 function InitCustomPlayerSlots()
     SetPlayerStartLocation(Player(0), 0)
     ForcePlayerStartLocation(Player(0), 0)
@@ -148,11 +96,8 @@ function main()
     SetAmbientDaySound("LordaeronSummerDay")
     SetAmbientNightSound("LordaeronSummerNight")
     SetMapMusic("Music", true, 0)
-    CreateAllUnits()
     InitBlizzard()
     InitGlobals()
-    InitCustomTriggers()
-    RunInitializationTriggers()
 end
 
 function config()
