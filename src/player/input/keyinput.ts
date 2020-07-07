@@ -29,6 +29,7 @@ export class KeyInput {
     constructor() {
         this.inputTrigger = new Trigger();
         this.setupKeys();
+        this.fixLeftClick()
     }
 
     setupKeys() {
@@ -47,7 +48,7 @@ export class KeyInput {
             }
         }
         this.inputTrigger.addAction(() => this.keyEvent());
-        new Timer().start( 0.03, true, () => this.movePlayerUnit());
+        new Timer().start(0.03, true, () => this.movePlayerUnit());
     }
 
     private keyEvent() {
@@ -61,9 +62,11 @@ export class KeyInput {
 
     private movePlayerUnit() {
         // const player: ZPlayer = ZPlayer.fromEvent();
-        for (let player of Players){
+        for (let player of Players) {
             const keys = this.keysDown[player.id];
-            if(!keys[Key.W] && !keys[Key.A] && !keys[Key.S] && !keys[Key.D]) {
+            if (!keys[Key.W] && !keys[Key.A] && !keys[Key.S] && !keys[Key.D]) {
+                ResetUnitAnimation(player.avatar.handle);
+                // player.avatar.issueInstantOrderAt('stop', 0, 0, null);
                 continue;
             }
             let angle: number;
@@ -71,27 +74,47 @@ export class KeyInput {
             let dx: number = 0;
             let dy: number = 0;
 
-            if(keys[Key.W]) {
+            if (keys[Key.W]) {
                 dy++;
             }
-            if(keys[Key.S]) {
+            if (keys[Key.S]) {
                 dy--;
             }
-            if(keys[Key.A]) {
-                dx++;
-            }
-            if(keys[Key.D]) {
+            if (keys[Key.A]) {
                 dx--;
             }
+            if (keys[Key.D]) {
+                dx++;
+            }
 
-            angle = Atan2(dy, dx) + player.avatar.facing**bj_DEGTORAD;
-            print(player.avatar.facing)
-            print(angle)
-            dx = player.avatar.x + KeyInput.moveDistance*Cos(angle)
-            dy = player.avatar.y + KeyInput.moveDistance*Sin(angle)
+            angle = Atan2(dy, dx)// + player.avatar.facing*bj_DEGTORAD;
+            player.avatar.facing = angle;
+            // print(player.avatar.facing)
+            dx = player.avatar.x + KeyInput.moveDistance * Cos(angle)
+            dy = player.avatar.y + KeyInput.moveDistance * Sin(angle)
+            if (player.walkTick === 0) {
+                // player.avatar.setAnimation("walk")
+                // player.avatar.queueAnimation("walk")
+                // player.avatar.queueAnimation("walk")
+                // player.avatar.queueAnimation("walk")
+                SetUnitAnimationByIndex(player.avatar.handle, 6)
+            }
+            if (player.walkTick === 5) {
+                player.walkTick = -1;
+            }
+            player.walkTick++;
+            SetUnitFacingTimed(player.avatar.handle, bj_RADTODEG * Atan2(dy - player.avatar.y, dx - player.avatar.x), 0);
             player.avatar.x = dx;
             player.avatar.y = dy;
         }
 
+    }
+
+    private fixLeftClick() {
+        CreateMultiboardBJ(1, 60, "")
+        MultiboardSetItemWidthBJ(GetLastCreatedMultiboard(), 1, 1, 110)
+        MultiboardMinimizeBJ(false, GetLastCreatedMultiboard())
+        BlzFrameSetAbsPoint(BlzGetFrameByName("Multiboard", 0), FRAMEPOINT_TOPRIGHT, 0.81, 0.64)
+        BlzFrameSetAlpha(BlzGetFrameByName("Multiboard", 0), 0)
     }
 }

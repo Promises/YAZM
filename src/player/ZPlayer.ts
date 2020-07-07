@@ -1,10 +1,14 @@
-import {MapPlayer, Timer, Unit} from "w3ts";
+import {MapPlayer, Timer, Unit, Trigger} from "w3ts";
 import {KeyInput} from "./input/keyinput";
 
 
 // @ts-ignore
 export class ZPlayer extends MapPlayer {
     avatar: Unit;
+    private mouseMoveTrigger: Trigger;
+    walkTick: number = 0;
+    private mouseX: number = 0;
+    private mouseY: number = 0;
 
     constructor(index: number) {
         super(index);
@@ -17,13 +21,20 @@ export class ZPlayer extends MapPlayer {
                 EnableSelect(false, true);
                 new Timer().start(0.1, false, () => {
                     SelectUnitForPlayerSingle(this.avatar.handle, this.handle)
+                    this.mouseMoveTrigger = new Trigger();
+                    this.mouseMoveTrigger.registerPlayerMouseEvent(this,bj_MOUSEEVENTTYPE_MOVE)
+                    this.mouseMoveTrigger.addAction(() => this.mouseMoved())
 
                 });
             });
         });
 
     }
-
+    private mouseMoved() {
+        // this.avatar.setFacingEx(bj_RADTODEG * Atan2(BlzGetTriggerPlayerMouseY() - this.avatar.y, BlzGetTriggerPlayerMouseX() - this.avatar.x))
+        this.mouseX = BlzGetTriggerPlayerMouseX();
+        this.mouseY = BlzGetTriggerPlayerMouseY();
+    }
 
     public static fromHandle(handle: player): ZPlayer {
         return Players[GetPlayerId(handle)];
@@ -48,6 +59,8 @@ export class ZPlayer extends MapPlayer {
     public static fromLocal() {
         return this.fromHandle(GetLocalPlayer());
     }
+
+
 }
 
 
