@@ -17,13 +17,15 @@ export class ZPlayer extends MapPlayer {
     constructor(index: number) {
         super(index);
         print("Hello world")
+
         this.pressedButtons = [];
         new Timer().start(0.5, false, () => {
             this.avatar = new Unit(this, FourCC("hfoo"), 0, 0, 270)
             this.avatar.name = this.name;
             new Timer().start(0.5, false, () => {
-                SetCameraTargetControllerNoZForPlayer(this.handle, this.avatar.handle, 0, 0, false);
+                SetCameraTargetControllerNoZForPlayer(this.handle, this.avatar.handle, 0, 150, false);
                 EnableSelect(false, true);
+                SetCameraField(CAMERA_FIELD_ANGLE_OF_ATTACK, 300, 1);
                 new Timer().start(0.1, false, () => {
                     SelectUnitForPlayerSingle(this.avatar.handle, this.handle)
                     this.mouseMoveTrigger = new Trigger();
@@ -41,6 +43,7 @@ export class ZPlayer extends MapPlayer {
         });
 
     }
+
 
     private mouseMoved() {
         this.mouseX = BlzGetTriggerPlayerMouseX();
