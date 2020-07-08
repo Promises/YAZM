@@ -102,7 +102,7 @@ end
 
 function config()
     SetMapName("TRIGSTR_001")
-    SetMapDescription("TRIGSTR_003")
+    SetMapDescription("")
     SetPlayers(5)
     SetTeams(5)
     SetGamePlacement(MAP_PLACEMENT_TEAMS_TOGETHER)
