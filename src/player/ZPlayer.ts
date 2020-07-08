@@ -1,5 +1,4 @@
 import {MapPlayer, Timer, Unit, Trigger} from "w3ts";
-import {MouseKey} from "./input/keyinput";
 
 
 // @ts-ignore
@@ -19,10 +18,10 @@ export class ZPlayer extends MapPlayer {
         print("Hello world")
 
         this.pressedButtons = [];
-        new Timer().start(0.5, false, () => {
+        new Timer().start(0.1, false, () => {
             this.avatar = new Unit(this, FourCC("hfoo"), 0, 0, 270)
             this.avatar.name = this.name;
-            new Timer().start(0.5, false, () => {
+            new Timer().start(0.1, false, () => {
                 SetCameraTargetControllerNoZForPlayer(this.handle, this.avatar.handle, 0, 150, false);
                 EnableSelect(false, true);
                 SetCameraField(CAMERA_FIELD_ANGLE_OF_ATTACK, 300, 1);

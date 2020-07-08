@@ -108,10 +108,10 @@ export class KeyInput {
     }
 
     private fixLeftClick() {
-        CreateMultiboardBJ(1, 60, "")
-        MultiboardSetItemWidthBJ(GetLastCreatedMultiboard(), 1, 1, 110)
-        MultiboardMinimizeBJ(false, GetLastCreatedMultiboard())
-        BlzFrameSetAbsPoint(BlzGetFrameByName("Multiboard", 0), FRAMEPOINT_TOPRIGHT, 0.81, 0.64)
-        BlzFrameSetAlpha(BlzGetFrameByName("Multiboard", 0), 0)
+        // CreateMultiboardBJ(1, 60, "")
+        // MultiboardSetItemWidthBJ(GetLastCreatedMultiboard(), 1, 1, 110)
+        // MultiboardMinimizeBJ(false, GetLastCreatedMultiboard())
+        // BlzFrameSetAbsPoint(BlzGetFrameByName("Multiboard", 0), FRAMEPOINT_TOPRIGHT, 0.81, 0.64)
+        // BlzFrameSetAlpha(BlzGetFrameByName("Multiboard", 0), 0)
     }
 }
