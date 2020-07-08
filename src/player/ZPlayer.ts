@@ -55,6 +55,7 @@ export class ZPlayer extends MapPlayer {
     public playWalkAnim() {
         if (this.walkTick === 0) {
             SetUnitAnimationByIndex(this.avatar.handle, 6)
+
         }
         if (this.walkTick === 5) {
             this.walkTick = -1;
