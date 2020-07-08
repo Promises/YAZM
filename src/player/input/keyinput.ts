@@ -72,6 +72,13 @@ export class KeyInput {
                 ResetUnitAnimation(player.avatar.handle);
                 continue;
             }
+            let moveSpeed = KeyInput.moveDistance;
+            if (keys[Key.SHIFT]) {
+                moveSpeed *= 1.75;
+                SetUnitTimeScalePercent( player.avatar.handle, 175.00 )
+            } else {
+                SetUnitTimeScalePercent( player.avatar.handle, 100.00 )
+            }
             let angle: number;
             let dx: number = 0;
             let dy: number = 0;
@@ -91,14 +98,14 @@ export class KeyInput {
 
             angle = Atan2(dy, dx)
             player.playWalkAnim();
-            dx = player.avatar.x + KeyInput.moveDistance * Cos(angle)
-            dy = player.avatar.y + KeyInput.moveDistance * Sin(angle)
+            dx = player.avatar.x + moveSpeed * Cos(angle)
+            dy = player.avatar.y + moveSpeed * Sin(angle)
 
             if (!player.leftMouse) {
                 player.setUnitFace(dx, dy);
             }
 
-            if (!IsTerrainPathable(player.avatar.x + (KeyInput.moveDistance * 5) * Cos(angle), player.avatar.y + (KeyInput.moveDistance * 5) * Sin(angle), PATHING_TYPE_WALKABILITY)) {
+            if (!IsTerrainPathable(player.avatar.x + (moveSpeed * 5) * Cos(angle), player.avatar.y + (moveSpeed * 5) * Sin(angle), PATHING_TYPE_WALKABILITY)) {
                 player.avatar.x = dx;
                 player.avatar.y = dy;
             }
@@ -108,10 +115,10 @@ export class KeyInput {
     }
 
     private fixLeftClick() {
-        // CreateMultiboardBJ(1, 60, "")
-        // MultiboardSetItemWidthBJ(GetLastCreatedMultiboard(), 1, 1, 110)
-        // MultiboardMinimizeBJ(false, GetLastCreatedMultiboard())
-        // BlzFrameSetAbsPoint(BlzGetFrameByName("Multiboard", 0), FRAMEPOINT_TOPRIGHT, 0.81, 0.64)
-        // BlzFrameSetAlpha(BlzGetFrameByName("Multiboard", 0), 0)
+        CreateMultiboardBJ(1, 60, "")
+        MultiboardSetItemWidthBJ(GetLastCreatedMultiboard(), 1, 1, 110)
+        MultiboardMinimizeBJ(false, GetLastCreatedMultiboard())
+        BlzFrameSetAbsPoint(BlzGetFrameByName("Multiboard", 0), FRAMEPOINT_TOPRIGHT, 0.81, 0.64)
+        BlzFrameSetAlpha(BlzGetFrameByName("Multiboard", 0), 0)
     }
 }
