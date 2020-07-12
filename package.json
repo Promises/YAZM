@@ -13,7 +13,9 @@
     "build:defs": "ts-node scripts/dev"
   },
   "dependencies": {
-    "w3ts": "^2.1.2"
+    "w3ts": "^2.1.2",
+    "wc3ts-eventqueue": "^1.0.0",
+    "wc3ts-missile": "^1.0.5"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",

@@ -1,6 +1,5 @@
 import {Trigger, Timer} from "w3ts/index";
 import {Players, ZPlayer} from "../ZPlayer";
-
 const osKeys = [
     OSKEY_W,
     OSKEY_A,

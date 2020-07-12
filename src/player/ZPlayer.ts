@@ -1,4 +1,5 @@
 import {MapPlayer, Timer, Unit, Trigger} from "w3ts";
+import { Missile } from "wc3ts-missile";
 
 
 // @ts-ignore
@@ -67,6 +68,8 @@ export class ZPlayer extends MapPlayer {
         const button = BlzGetTriggerPlayerMouseButton();
         if (button == MOUSE_BUTTON_TYPE_LEFT) {
             this.leftMouse = pressed;
+                new Missile(this.avatar, this.mouseX, this.mouseY);
+
         }
         this.mouseMoved();
 
