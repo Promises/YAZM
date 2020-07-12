@@ -11,7 +11,6 @@ export function Yasm() {
     print(`Transpiler: v${TSTL_VERSION}`);
     print(" ");
     print("Welcome to TypeScript!");
-
     SetupPlayers();
     new Timer().start(1, false, () => new KeyInput());
 }

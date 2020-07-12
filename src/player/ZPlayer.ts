@@ -1,5 +1,7 @@
 import {MapPlayer, Timer, Unit, Trigger} from "w3ts";
 import { Missile } from "wc3ts-missile";
+import {Weapon} from "../equipment/weapon/weapon";
+import {BasicGun} from "../equipment/weapon/basicgun";
 
 
 // @ts-ignore
@@ -12,6 +14,7 @@ export class ZPlayer extends MapPlayer {
     mouseX: number = 0;
     mouseY: number = 0;
     pressedButtons: boolean[];
+    currentWeapon: Weapon;
     leftMouse: boolean = false;
 
     constructor(index: number) {
@@ -20,8 +23,11 @@ export class ZPlayer extends MapPlayer {
 
         this.pressedButtons = [];
         new Timer().start(0.1, false, () => {
-            this.avatar = new Unit(this, FourCC("hfoo"), 0, 0, 270)
+            this.avatar = new Unit(this, FourCC("hfoo"), -13194.9, -13658.0, 270)
             this.avatar.name = this.name;
+            this.currentWeapon = new BasicGun(this);
+            this.currentWeapon.start()
+            this.currentWeapon.setActive();
             new Timer().start(0.1, false, () => {
                 SetCameraTargetControllerNoZForPlayer(this.handle, this.avatar.handle, 0, 150, false);
                 EnableSelect(false, true);
@@ -68,8 +74,7 @@ export class ZPlayer extends MapPlayer {
         const button = BlzGetTriggerPlayerMouseButton();
         if (button == MOUSE_BUTTON_TYPE_LEFT) {
             this.leftMouse = pressed;
-                new Missile(this.avatar, this.mouseX, this.mouseY);
-
+            // this.currentWeapon.fire();
         }
         this.mouseMoved();
 
