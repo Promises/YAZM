@@ -43,9 +43,39 @@ STRING 11
 Player 12
 }
 
-STRING 12
-// Doodads: D001 (Custom InvisiRock), Name (Name)
+STRING 13
+// Doodads: D001 (CUSTOM InvisiRock), Name (Name)
 {
-Custom InvisiRock
+CUSTOM InvisiRock
+}
+
+STRING 14
+// Doodads: D000 (CUSTOM Skull Pile), Name (Name)
+{
+CUSTOM Skull Pile
+}
+
+STRING 15
+// Doodads: D003 (CUSTOM Tent), Name (Name)
+{
+CUSTOM Tent
+}
+
+STRING 16
+// Doodads: D002 (CUSTOM Doodad Footman), Name (Name)
+{
+CUSTOM Doodad Footman
+}
+
+STRING 17
+// Doodads: D004 (CUSTOM Doodad Rifleman), Name (Name)
+{
+CUSTOM Doodad Rifleman
+}
+
+STRING 18
+// Doodads: D005 (CUSTOM Doodad Ship), Name (Name)
+{
+CUSTOM Doodad Ship
 }
 
