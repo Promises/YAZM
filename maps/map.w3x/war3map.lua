@@ -1,3 +1,6 @@
+function InitGlobals()
+end
+
 gg_trg_demo_init = nil
 gg_trg_mui_init = nil
 
@@ -524,6 +527,62 @@ do
         end
     end
 end
+
+function InitTrig_demo_init()
+    gg_trg_demo_init = CreateTrigger()
+    TriggerRegisterTimerEventSingle(gg_trg_demo_init, 0.00)
+    TriggerAddAction(gg_trg_demo_init, Trig_demo_init_Actions)
+end
+
+
+function Trig_demo_init_Actions()
+--     SetTimeOfDay(12)
+    CinematicModeBJ(true, GetPlayersAll())
+    TriggerSleepAction(0.66)
+    CinematicModeBJ(false, GetPlayersAll())
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 4
+--     while (true) do
+--         if (bj_forLoopAIndex > bj_forLoopAIndexEnd) then break end
+--         SetPlayerStateBJ(ConvertedPlayer(GetForLoopIndexA()), PLAYER_STATE_RESOURCE_GOLD, 9999)
+--         SetPlayerStateBJ(ConvertedPlayer(GetForLoopIndexA()), PLAYER_STATE_RESOURCE_LUMBER, 9999)
+--         SetPlayerStateBJ(ConvertedPlayer(GetForLoopIndexA()), PLAYER_STATE_RESOURCE_FOOD_CAP, 100)
+--         if (Trig_demo_init_Func007Func004C()) then
+--             SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(0), bj_ALLIANCE_ALLIED_UNITS)
+--         else
+--             if (Trig_demo_init_Func007Func004Func001C()) then
+--                 SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(1), bj_ALLIANCE_ALLIED_UNITS)
+--             else
+--                 if (Trig_demo_init_Func007Func004Func001Func001C()) then
+--                     SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(2), bj_ALLIANCE_ALLIED_UNITS)
+--                 else
+--                     if (Trig_demo_init_Func007Func004Func001Func001Func001C()) then
+--                         SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(3), bj_ALLIANCE_ALLIED_UNITS)
+--                     else
+--                     end
+--                 end
+--             end
+--         end
+--         bj_forLoopAIndex = bj_forLoopAIndex + 1
+--     end
+end
+function Trig_mui_init_Actions()
+        mui.Init()
+    TriggerSleepAction(0.00)
+        mui.InitUnitSelectedUpdate()
+end
+
+function InitTrig_mui_init()
+    gg_trg_mui_init = CreateTrigger()
+    TriggerAddAction(gg_trg_mui_init, Trig_mui_init_Actions)
+end
+
+function InitCustomTriggers()
+    InitTrig_demo_init()
+    InitTrig_mui_init()
+end
+
+--
 --
 function InitCustomPlayerSlots()
     SetPlayerStartLocation(Player(0), 0)
@@ -612,73 +671,15 @@ function InitAllyPriorities()
     SetStartLocPrio(4, 1, 2, MAP_LOC_PRIO_HIGH)
 end
 
-function InitTrig_demo_init()
-    gg_trg_demo_init = CreateTrigger()
-    TriggerRegisterTimerEventSingle(gg_trg_demo_init, 0.00)
-    TriggerAddAction(gg_trg_demo_init, Trig_demo_init_Actions)
-end
-function Trig_demo_init_Actions()
---     SetTimeOfDay(12)
-    CinematicModeBJ(true, GetPlayersAll())
-    TriggerSleepAction(0.66)
-    CinematicModeBJ(false, GetPlayersAll())
-    bj_forLoopAIndex = 1
-    bj_forLoopAIndexEnd = 4
---     while (true) do
---         if (bj_forLoopAIndex > bj_forLoopAIndexEnd) then break end
---         SetPlayerStateBJ(ConvertedPlayer(GetForLoopIndexA()), PLAYER_STATE_RESOURCE_GOLD, 9999)
---         SetPlayerStateBJ(ConvertedPlayer(GetForLoopIndexA()), PLAYER_STATE_RESOURCE_LUMBER, 9999)
---         SetPlayerStateBJ(ConvertedPlayer(GetForLoopIndexA()), PLAYER_STATE_RESOURCE_FOOD_CAP, 100)
---         if (Trig_demo_init_Func007Func004C()) then
---             SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(0), bj_ALLIANCE_ALLIED_UNITS)
---         else
---             if (Trig_demo_init_Func007Func004Func001C()) then
---                 SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(1), bj_ALLIANCE_ALLIED_UNITS)
---             else
---                 if (Trig_demo_init_Func007Func004Func001Func001C()) then
---                     SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(2), bj_ALLIANCE_ALLIED_UNITS)
---                 else
---                     if (Trig_demo_init_Func007Func004Func001Func001Func001C()) then
---                         SetPlayerAllianceStateBJ(ConvertedPlayer(GetForLoopIndexA()), Player(3), bj_ALLIANCE_ALLIED_UNITS)
---                     else
---                     end
---                 end
---             end
---         end
---         bj_forLoopAIndex = bj_forLoopAIndex + 1
---     end
-end
-function Trig_mui_init_Actions()
-        mui.Init()
-    TriggerSleepAction(0.00)
-        mui.InitUnitSelectedUpdate()
-end
-
-function InitTrig_mui_init()
-    gg_trg_mui_init = CreateTrigger()
-    TriggerAddAction(gg_trg_mui_init, Trig_mui_init_Actions)
-end
-
-function InitCustomTriggers()
-    InitTrig_demo_init()
-    InitTrig_mui_init()
-end
-
-function RunInitializationTriggers()
-    ConditionalTriggerExecute(gg_trg_mui_init)
-end
-
 function main()
-    SetCameraBounds(-12288.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -12800.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 12288.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 11776.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -12288.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 11776.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 12288.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -12800.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
-    SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
+    SetCameraBounds(-14336.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -14848.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 14336.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 13824.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -14336.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 13824.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 14336.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -14848.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
+    SetDayNightModels("Environment\\DNC\\DNCDalaran\\DNCDalaranTerrain\\DNCDalaranTerrain.mdl", "Environment\\DNC\\DNCDalaran\\DNCDalaranUnit\\DNCDalaranUnit.mdl")
     NewSoundEnvironment("Default")
-    SetAmbientDaySound("LordaeronSummerDay")
-    SetAmbientNightSound("LordaeronSummerNight")
+    SetAmbientDaySound("DalaranRuinsDay")
+    SetAmbientNightSound("DalaranRuinsNight")
     SetMapMusic("Music", true, 0)
     InitBlizzard()
     InitGlobals()
-    InitCustomTriggers()
-    RunInitializationTriggers()
 end
 
 function config()
@@ -687,11 +688,11 @@ function config()
     SetPlayers(5)
     SetTeams(5)
     SetGamePlacement(MAP_PLACEMENT_TEAMS_TOGETHER)
-    DefineStartLocation(0, 0.0, -512.0)
-    DefineStartLocation(1, 0.0, -512.0)
-    DefineStartLocation(2, 0.0, -512.0)
-    DefineStartLocation(3, 0.0, -512.0)
-    DefineStartLocation(4, 0.0, -512.0)
+    DefineStartLocation(0, -13184.0, -13696.0)
+    DefineStartLocation(1, -13184.0, -13696.0)
+    DefineStartLocation(2, -13184.0, -13696.0)
+    DefineStartLocation(3, -13184.0, -13696.0)
+    DefineStartLocation(4, -13184.0, -13696.0)
     InitCustomPlayerSlots()
     InitCustomTeams()
     InitAllyPriorities()
